@@ -3,9 +3,7 @@
 #include <stdio.h>
 
 /**
- * main- entry point
- *
- * Descriptions: This program will determine if n is positive, negative or zero
+ * main- This program determines if n is positive, negative or zero
  *
  * return: always 0 (sucess)
  */

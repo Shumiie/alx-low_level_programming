@@ -283,3 +283,36 @@ void print_diagsums(int *a, int size)
 	printf("%d, %d\n", sum1, sum2);
 }
 
+##ADVANCED TASKS
+
+#[8. Double pointer, double fun (100-set_string.c)]
+Write a function that sets the value of a pointer to a char.
+Prototype: void set_string(char **s, char *to);
+
+#[9. My primary goal of hacking was the intellectual curiosity, the seduction of adventure (101-crackme_password)]
+Create a file that contains the password for the crackme2 executable.
+Your file should contain the exact password, no new line, no extra space
+ltrace, ldd, gdb and objdump can help
+You may need to install the openssl library to run the crakme2 program: sudo apt install libssl-dev
+Edit the source list sudo nano /etc/apt/sources.list to add the following line: deb http://security.ubuntu.com/ubuntu xenial-security main Then sudo apt update and sudo apt install libssl1.0.0
+
+[100-set_string.c]
+
+#include "main.h"
+
+/**
+ * set_string - sets the value of a pointer to a char
+ * @s: pointer to pointer
+ * @to: pointer char
+ */
+
+void set_string(char **s, char *to)
+{
+	*s = to;
+}
+
+
+[101-crackme_password]
+
+abc123
+

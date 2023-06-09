@@ -281,3 +281,280 @@ char *leet(char *n)
 	return (n);
 }
 
+
+##ADVANCED TASKS
+
+#[8. rot13 (100-rot13.c)]
+Write a function that encodes a string using rot13.
+Prototype: char *rot13(char *);
+You can only use if statement once in your code
+You can only use two loops in your code
+You are not allowed to use switch
+You are not allowed to use any ternary operation
+
+#[9. Numbers have life; they're not just symbols on paper (101-print_number.c)]
+Write a function that prints an integer.
+Prototype: void print_number(int n);
+You can only use _putchar function to print
+You are not allowed to use long
+You are not allowed to use arrays or pointers
+You are not allowed to hard-code special values
+
+#[10. A dream doesn't become reality through magic; it takes sweat, determination and hard work (102-magic.c)]
+Add one line to this code, so that the program prints a[2] = 98, followed by a new line.
+You are not allowed to use the variable a in your new line of code
+You are not allowed to modify the variable p
+You can only write one statement
+You are not allowed to use ,
+You are not allowed to code anything else than the line of expected line of code at the expected line
+Your code should be written at line 19, before the ;
+Do not remove anything from the initial code (not even the comments)
+and don’t change anything but the line of code you are adding (don’t change the spaces to tabs!)
+You are allowed to use the standard library
+
+#[11. It is the addition of strangeness to beauty that constitutes the romantic character in art (103-infinite_add.c)]
+Write a function that adds two numbers.
+Prototype: char *infinite_add(char *n1, char *n2, char *r, int size_r);
+Where n1 and n2 are the two numbers
+r is the buffer that the function will use to store the result
+size_r is the buffer size
+The function returns a pointer to the result
+You can assume that you will always get positive numbers, or 0
+You can assume that there will be only digits in the strings n1 and n2
+n1 and n2 will never be empty
+If the result can not be stored in r the function must return 0
+
+#[12. Noise is a buffer, more effective than cubicles or booth walls (104-print_buffer.c)]
+Write a function that prints a buffer.
+Prototype: void print_buffer(char *b, int size);
+The function must print the content of size bytes of the buffer pointed by b
+The output should print 10 bytes per line
+Each line starts with the position of the first byte of the line in hexadecimal (8 chars), starting with 0
+Each line shows the hexadecimal content (2 chars) of the buffer, 2 bytes at a time, separated by a space
+Each line shows the content of the buffer. If the byte is a printable character, print the letter, if not, print .
+Each line ends with a new line \n
+If size is 0 or less, the output should be a new line only \n
+You are allowed to use the standard library
+
+
+[100-rot13.c]
+
+#include "main.h"
+#include <stdio.h>
+
+/**
+ * rot13 - encoder rot13
+ * @s: pointer to string params
+ *
+ * Return: *s
+ */
+
+char *rot13(char *s)
+{
+	int i;
+	int j;
+	char data1[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char datarot[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		for (j = 0; j < 52; j++)
+		{
+			if (s[i] == data1[j])
+			{
+				s[i] = datarot[j];
+				break;
+			}
+		}
+	}
+	return (s);
+}
+
+[101-print_number.c]
+
+#include "main.h"
+
+/**
+ * print_number - print numbers chars
+ * @n: integer params
+ * Return: 0
+ */
+
+void print_number(int n)
+{
+	unsigned int n1;
+
+	n1 = n;
+
+	if (n < 0)
+	{
+		_putchar('-');
+		n1 = -n;
+	}
+
+	if (n1 / 10 != 0)
+	{
+		print_number(n1 / 10);
+	}
+	_putchar((n1 % 10) + '0');
+}
+
+[102-magic.c]
+
+#include <stdio.h>
+
+int main(void)
+{
+  int n;
+  int a[5];
+  int *p;
+
+  a[2] = 1024;
+  p = &n;
+  /*
+   * write your line of code here...
+   * Remember:
+   * - you are not allowed to use a
+   * - you are not allowed to modify p
+   * - only one statement
+   * - you are not allowed to code anything else than this line of code
+   */
+  *(p + 5) = 98;
+  /* ...so that this prints 98\n */
+  printf("a[2] = %d\n", a[2]);
+  return (0);
+}
+
+[103-infinite_add.c]
+
+#include "main.h"
+
+/**
+ * rev_string - reverse array
+ * @n: integer params
+ * Return: 0
+ */
+
+void rev_string(char *n)
+{
+	int i = 0;
+	int j = 0;
+	char temp;
+
+	while (*(n + i) != '\0')
+	{
+		i++;
+	}
+	i--;
+
+	for (j = 0; j < i; j++, i--)
+	{
+		temp = *(n + j);
+		*(n + j) = *(n + i);
+		*(n + i) = temp;
+	}
+}
+
+/**
+ * infinite_add - add 2 numbers together
+ * @n1: text representation of 1st number to add
+ * @n2: text representation of 2nd number to add
+ * @r: pointer to buffer
+ * @size_r: buffer size
+ * Return: pointer to calling function
+ */
+
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
+{
+	int overflow = 0, i = 0, j = 0, digits = 0;
+	int val1 = 0, val2 = 0, temp_tot = 0;
+
+	while (*(n1 + i) != '\0')
+		i++;
+	while (*(n2 + j) != '\0')
+		j++;
+	i--;
+	j--;
+	if (j >= size_r || i >= size_r)
+		return (0);
+	while (j >= 0 || i >= 0 || overflow == 1)
+	{
+		if (i < 0)
+			val1 = 0;
+		else
+			val1 = *(n1 + i) - '0';
+		if (j < 0)
+			val2 = 0;
+		else
+			val2 = *(n2 + j) - '0';
+		temp_tot = val1 + val2 + overflow;
+		if (temp_tot >= 10)
+			overflow = 1;
+		else
+			overflow = 0;
+		if (digits >= (size_r - 1))
+			return (0);
+		*(r + digits) = (temp_tot % 10) + '0';
+		digits++;
+		j--;
+		i--;
+	}
+	if (digits == size_r)
+		return (0);
+	*(r + digits) = '\0';
+	rev_string(r);
+	return (r);
+}
+
+[104-print_buffer.c]
+
+#include "main.h"
+#include <stdio.h>
+
+/**
+ * print_buffer - prints buffer
+ * @b: buffer
+ * @size: size
+ * Return: void
+ */
+
+void print_buffer(char *b, int size)
+{
+	int o, j, i;
+
+	o = 0;
+
+	if (size <= 0)
+	{
+		printf("\n");
+		return;
+	}
+	while (o < size)
+	{
+		j = size - o < 10 ? size - o : 10;
+		printf("%08x: ", o);
+		for (i = 0; i < 10; i++)
+		{
+			if (i < j)
+				printf("%02x", *(b + o + i));
+			else
+				printf("  ");
+			if (i % 2)
+			{
+				printf(" ");
+			}
+		}
+		for (i = 0; i < j; i++)
+		{
+			int c = *(b + o + i);
+
+			if (c < 32 || c > 132)
+			{
+				c = '.';
+			}
+			printf("%c", c);
+		}
+		printf("\n");
+		o += 10;
+	}
+}
